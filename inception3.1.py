@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 import tensorflow as tf
-import os
+import os,sys
 import numpy as np
 from PIL import Image
 
@@ -68,7 +68,7 @@ class NodeLookup(object):
             return ''
         return self.node_lookup[node_id]
 
-model_dir = "./inception_dec_2015"
+model_dir = sys.argv[1]#"./inception_dec_2015"
 
 with tf.gfile.FastGFile(os.path.join(model_dir,
                                      'classify_image_graph_def.pb'), 'rb') as f:
@@ -82,7 +82,7 @@ with tf.Session() as sess:
     #输出
     print('{\n    \"results\": [\n')
     # 遍历目录
-    for root, dirs, files in os.walk('image/'):
+    for root, dirs, files in os.walk(sys.argv[2]):
         for file in files:
             # 载入图片
             image_data = tf.gfile.FastGFile(
